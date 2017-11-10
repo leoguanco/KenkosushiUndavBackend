@@ -1,6 +1,7 @@
 package com.kenkosushi.Undav.domain.repository;
 
+import com.kenkosushi.Undav.domain.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PurchasingSystem extends JpaRepository<PurchasingSystem,Long> {
+public interface RoleRepository extends JpaRepository<Role,Long> {
 }

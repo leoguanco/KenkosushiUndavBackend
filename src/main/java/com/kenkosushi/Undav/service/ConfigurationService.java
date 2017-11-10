@@ -15,7 +15,7 @@ public class ConfigurationService {
         this.configurationRepository=configurationRepository;
     }
 
-    public Configuration findBy(Long id){
+    public Configuration findById(Long id){
         return configurationRepository.findOne(id);
     }
 }
