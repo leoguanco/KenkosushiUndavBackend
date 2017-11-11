@@ -5,6 +5,8 @@ import com.kenkosushi.Undav.domain.repository.PhoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class PhoneService {
 
@@ -17,5 +19,21 @@ public class PhoneService {
 
     public Phone findById(Long id){
         return phoneRepository.findOne(id);
+    }
+
+    public Collection<Phone> findAll(){
+        return phoneRepository.findAll();
+    }
+
+    public void save(Phone phone){
+        phoneRepository.save(phone);
+    }
+
+    public void update(Phone phone){
+        phoneRepository.save(phone);
+    }
+
+    public void delete(Long id){
+        phoneRepository.delete(id);
     }
 }
