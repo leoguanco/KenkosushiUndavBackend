@@ -23,7 +23,7 @@ public class PurchasingSystemController {
         this.purchasingSystemService = purchasingSystemService;
     }
 
-    @PutMapping("/admin/products/{id}")
+    @PutMapping("/admin/purchasingSystem/{id}")
     public ResponseEntity<PurchasingSystem> updateProduct(@PathVariable Long id, PurchasingSystem purchasingSystem){
         ResponseEntity<PurchasingSystem> response;
         PurchasingSystem purchasingSystem1 = purchasingSystemService.findById(id);
