@@ -24,6 +24,7 @@ public class UserController {
     private PurchaseService purchaseService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
     public UserController(UserService userService, RoleService roleService, AddressService addressService,
                           PhoneService phoneService, PurchaseService purchaseService,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -34,9 +35,6 @@ public class UserController {
         this.purchaseService = purchaseService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
-    @Autowired
-
 
     // ABM User
 
