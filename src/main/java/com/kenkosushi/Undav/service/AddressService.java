@@ -44,5 +44,7 @@ public class AddressService {
         addressRepository.delete(id);
     }
 
-
+    public Collection<Address> findByUserId(Long userId){
+        return addressRepository.findByUserId(userId);
+    }
 }

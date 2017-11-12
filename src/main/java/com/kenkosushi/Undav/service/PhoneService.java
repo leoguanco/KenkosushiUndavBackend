@@ -36,4 +36,8 @@ public class PhoneService {
     public void delete(Long id){
         phoneRepository.delete(id);
     }
+
+    public Collection<Phone> findByUserId(Long userId){
+        return phoneRepository.findByUserId(userId);
+    }
 }

@@ -36,4 +36,8 @@ public class PurchaseService {
     public void delete(Long id){
         purchaseRepository.delete(id);
     }
+
+    public Collection<Purchase> findByUserId(Long id){
+        return purchaseRepository.findByUserId(id);
+    }
 }
