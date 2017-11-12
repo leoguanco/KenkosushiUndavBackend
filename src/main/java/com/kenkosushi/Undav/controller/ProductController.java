@@ -36,9 +36,9 @@ public class ProductController {
 
         if(product1 != null){
             productService.update(product);
-            response = new ResponseEntity<Product>(product1, HttpStatus.OK);
+            response = new ResponseEntity<Product>(product, HttpStatus.OK);
         }else{
-            response = new ResponseEntity<Product>(product1, HttpStatus.NOT_FOUND);
+            response = new ResponseEntity<Product>(product, HttpStatus.NOT_FOUND);
         }
 
         return response;
@@ -46,13 +46,10 @@ public class ProductController {
 
     @DeleteMapping("/admin/products/{id}")
     public Boolean deleteProduct(@PathVariable Long id){
-        Boolean response;
-
         productService.delete(id);
+        Product product = productService.findById(id);
 
-        Product product1 = productService.findById(id);
-
-        if(product1 == null){
+        if(product == null){
             return true;
         }else{
             return false;
