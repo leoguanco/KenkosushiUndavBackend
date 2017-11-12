@@ -59,12 +59,12 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/products/")
+    @GetMapping("/public/products/")
     public Collection<Product> getAllProduct(){
         return productService.findAll();
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/public/products/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id){
         ResponseEntity<Product> response;
         Product product = productService.findById(id);
