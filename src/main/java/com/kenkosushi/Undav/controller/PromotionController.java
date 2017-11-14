@@ -5,6 +5,7 @@ import com.kenkosushi.Undav.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -18,12 +19,14 @@ public class PromotionController {
         this.promotionService=promotionService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/promotions/")
     public ResponseEntity<Promotion> addPromotion(Promotion promotion){
         promotionService.save(promotion);
         return new ResponseEntity<Promotion>(promotion, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/promotions/{id}")
     public ResponseEntity<Promotion> updatePromotion(@PathVariable Long id,Promotion promotion){
         ResponseEntity<Promotion> response;
@@ -39,6 +42,7 @@ public class PromotionController {
         return response;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/promotions/{id}")
     public Boolean deleteProduct(@PathVariable Long id){
         Boolean response;
@@ -54,11 +58,13 @@ public class PromotionController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/promotions")
     public Collection<Promotion> getAllPromotion(){
         return promotionService.findAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/promotions/{id}")
     public ResponseEntity<Promotion> getProduct(@PathVariable Long id){
         ResponseEntity<Promotion> response;

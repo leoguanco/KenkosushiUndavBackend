@@ -5,6 +5,7 @@ import com.kenkosushi.Undav.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class UserController {
 
     // ABM User
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/users/")
     public ResponseEntity<User> addUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -46,6 +48,7 @@ public class UserController {
         return new ResponseEntity<User>(user,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{id}","/users/{id}"})
     public ResponseEntity<User> updateUser(@PathVariable Long id, User user){
         ResponseEntity<User> response;
@@ -61,6 +64,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/users/{id}")
     public Boolean deleteProduct(@PathVariable Long id){
         userService.delete(id);
@@ -73,6 +77,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @GetMapping({"/admin/users/{id}","/user/{id}"})
     public ResponseEntity<User> getUser(@PathVariable Long id){
         ResponseEntity<User> response;
@@ -87,6 +92,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/users/")
     public Collection<User> getAllUsers(){
         return userService.findAll();
@@ -94,6 +100,7 @@ public class UserController {
 
     // Address
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PostMapping({"/admin/users/{id}/addresses","/users/{id}/addresses"})
     public ResponseEntity<Address> addUserAddres(Address address){
         addressService.save(address);
@@ -101,6 +108,7 @@ public class UserController {
         return new ResponseEntity<Address>(address,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{userId}/addresses/{addressId}","users/{userId}/addresses/{addressId}"})
     public ResponseEntity<Address> updateUserAddress(@PathVariable Long userId,@PathVariable Long addressId, Address address){
         ResponseEntity<Address> response = null;
@@ -120,6 +128,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @DeleteMapping({"/admin/users/{userId}/addresses/{addressId}","users/{userId}/addresses/{addressId}"})
     public Boolean deleteUserAddress(@PathVariable Long userId, @PathVariable Long addressId){
         Address address = null;
@@ -139,6 +148,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @GetMapping({"/admin/users/{id}/addresses/", "/users/{id}/addresses/"})
     public Collection<Address> getAllUserAddress(@PathVariable Long id){
         return addressService.findByUserId(id);
@@ -146,6 +156,7 @@ public class UserController {
 
     // Phone
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PostMapping({"/admin/users/{id}/phones","/users/{id}/phones"})
     public ResponseEntity<Phone> addUserPhone(Phone phone){
         phoneService.save(phone);
@@ -153,6 +164,7 @@ public class UserController {
         return new ResponseEntity<Phone>(phone,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{userId}/phones/{phoneId}","users/{userId}/phones/{phoneId}"})
     public ResponseEntity<Phone> updateUserPhone(@PathVariable Long userId,@PathVariable Long phoneId, Phone phone){
         ResponseEntity<Phone> response = null;
@@ -172,6 +184,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @DeleteMapping({"/admin/users/{userId}/phones/{phoneId}","users/{userId}/phones/{phoneId}"})
     public Boolean deleteUserPhone(@PathVariable Long userId, @PathVariable Long phoneId){
         Phone phone = null;
@@ -191,13 +204,14 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @GetMapping({"/admin/users/{id}/phones/", "/users/{id}/phones/"})
     public Collection<Phone> getAllUserPhone(@PathVariable Long id){
         return phoneService.findByUserId(id);
     }
 
     // Purchase
-
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PostMapping({"/admin/users/{id}/purchases","/users/{id}/purchases"})
     public ResponseEntity<Purchase> addUserPurchase(Purchase purchase){
         purchaseService.save(purchase);
@@ -205,6 +219,7 @@ public class UserController {
         return new ResponseEntity<Purchase>(purchase,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{userId}/purchases/{purchaseId}","users/{userId}/purchases/{purchaseId}"})
     public ResponseEntity<Purchase> updateUserPurchase(@PathVariable Long userId,@PathVariable Long purchaseId, Purchase purchase){
         ResponseEntity<Purchase> response = null;
@@ -224,6 +239,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @DeleteMapping({"/admin/users/{userId}/purchases/{purchaseId}","users/{userId}/purchases/{purchaseId}"})
     public Boolean deleteUserPurchase(@PathVariable Long userId, @PathVariable Long purchaseId){
         Purchase purchase = null;
@@ -243,6 +259,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @GetMapping({"/admin/users/{id}/purchases/", "/users/{id}/purchases/"})
     public Collection<Purchase> getAllUserPurchase(@PathVariable Long id){
         return purchaseService.findByUserId(id);

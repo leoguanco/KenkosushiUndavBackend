@@ -5,6 +5,7 @@ import com.kenkosushi.Undav.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -23,12 +24,14 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/products/")
     public ResponseEntity<Product> addProduct(Product product){
         productService.save(product);
         return new ResponseEntity<Product>(product,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/products/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, Product product){
         ResponseEntity<Product> response;
@@ -44,6 +47,7 @@ public class ProductController {
         return response;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/products/{id}")
     public Boolean deleteProduct(@PathVariable Long id){
         productService.delete(id);

@@ -5,6 +5,7 @@ import com.kenkosushi.Undav.service.PurchasingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class PurchasingSystemController {
     public PurchasingSystemController(PurchasingSystemService purchasingSystemService) {
         this.purchasingSystemService = purchasingSystemService;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/purchasingSystem/{id}")
     public ResponseEntity<PurchasingSystem> updateProduct(@PathVariable Long id, PurchasingSystem purchasingSystem){
         ResponseEntity<PurchasingSystem> response;
