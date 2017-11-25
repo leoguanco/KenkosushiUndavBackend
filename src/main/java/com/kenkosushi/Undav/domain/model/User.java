@@ -1,5 +1,7 @@
 package com.kenkosushi.Undav.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -36,6 +38,7 @@ public class User {
     private String observations;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @JsonManagedReference
     private Set<Role> role = new HashSet<Role>();
 
     public User(){}
@@ -130,5 +133,21 @@ public class User {
 
     public void setRole(Set<Role> role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", lastLogin=" + lastLogin +
+                ", isActive=" + isActive +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", observations='" + observations + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

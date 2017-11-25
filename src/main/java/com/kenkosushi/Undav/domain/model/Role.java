@@ -1,5 +1,7 @@
 package com.kenkosushi.Undav.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -19,6 +21,7 @@ public class Role {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user", nullable = false)
+    @JsonBackReference
     private User user;
 
     public Role(){}
