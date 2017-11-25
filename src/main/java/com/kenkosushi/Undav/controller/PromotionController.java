@@ -2,6 +2,8 @@ package com.kenkosushi.Undav.controller;
 
 import com.kenkosushi.Undav.domain.model.Promotion;
 import com.kenkosushi.Undav.service.PromotionService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 public class PromotionController {
+    private static final Log log = LogFactory.getLog(PromotionController.class);
 
     private PromotionService promotionService;
 
@@ -21,14 +24,14 @@ public class PromotionController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/promotions/")
-    public ResponseEntity<Promotion> addPromotion(Promotion promotion){
+    public ResponseEntity<Promotion> addPromotion(@RequestBody Promotion promotion){
         promotionService.save(promotion);
         return new ResponseEntity<Promotion>(promotion, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/promotions/{id}")
-    public ResponseEntity<Promotion> updatePromotion(@PathVariable Long id,Promotion promotion){
+    public ResponseEntity<Promotion> updatePromotion(@PathVariable Long id,@RequestBody Promotion promotion){
         ResponseEntity<Promotion> response;
         Promotion promotion1=promotionService.findById(id);
 

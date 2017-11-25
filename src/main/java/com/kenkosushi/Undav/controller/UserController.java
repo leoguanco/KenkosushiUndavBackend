@@ -2,6 +2,8 @@ package com.kenkosushi.Undav.controller;
 
 import com.kenkosushi.Undav.domain.model.*;
 import com.kenkosushi.Undav.service.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.logging.Logger;
 
 /**
  * Created by leo on 11/10/17.
@@ -17,6 +20,8 @@ import java.util.Collection;
 
 @RestController
 public class UserController {
+
+    private static final Log log = LogFactory.getLog(UserController.class);
 
     private UserService userService;
     private RoleService roleService;
@@ -41,7 +46,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/users/")
-    public ResponseEntity<User> addUser(User user){
+    public ResponseEntity<User> addUser(@RequestBody User user){
+        log.info(user.toString());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userService.save(user);
 
@@ -50,7 +56,7 @@ public class UserController {
 
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{id}","/users/{id}"})
-    public ResponseEntity<User> updateUser(@PathVariable Long id, User user){
+    public ResponseEntity<User> updateUser(@PathVariable Long id,@RequestBody User user){
         ResponseEntity<User> response;
         User user1 = userService.findById(id);
 
@@ -102,7 +108,7 @@ public class UserController {
 
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PostMapping({"/admin/users/{id}/addresses","/users/{id}/addresses"})
-    public ResponseEntity<Address> addUserAddres(Address address){
+    public ResponseEntity<Address> addUserAddres(@RequestBody Address address){
         addressService.save(address);
 
         return new ResponseEntity<Address>(address,HttpStatus.CREATED);
@@ -110,7 +116,7 @@ public class UserController {
 
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{userId}/addresses/{addressId}","users/{userId}/addresses/{addressId}"})
-    public ResponseEntity<Address> updateUserAddress(@PathVariable Long userId,@PathVariable Long addressId, Address address){
+    public ResponseEntity<Address> updateUserAddress(@PathVariable Long userId,@PathVariable Long addressId,@RequestBody Address address){
         ResponseEntity<Address> response = null;
         Address address1 = null;
         User user1 = userService.findById(userId);
@@ -158,7 +164,7 @@ public class UserController {
 
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PostMapping({"/admin/users/{id}/phones","/users/{id}/phones"})
-    public ResponseEntity<Phone> addUserPhone(Phone phone){
+    public ResponseEntity<Phone> addUserPhone(@RequestBody Phone phone){
         phoneService.save(phone);
 
         return new ResponseEntity<Phone>(phone,HttpStatus.CREATED);
@@ -166,7 +172,7 @@ public class UserController {
 
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{userId}/phones/{phoneId}","users/{userId}/phones/{phoneId}"})
-    public ResponseEntity<Phone> updateUserPhone(@PathVariable Long userId,@PathVariable Long phoneId, Phone phone){
+    public ResponseEntity<Phone> updateUserPhone(@PathVariable Long userId,@PathVariable Long phoneId,@RequestBody Phone phone){
         ResponseEntity<Phone> response = null;
         Phone phone1 = null;
         User user1 = userService.findById(userId);
@@ -213,7 +219,7 @@ public class UserController {
     // Purchase
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PostMapping({"/admin/users/{id}/purchases","/users/{id}/purchases"})
-    public ResponseEntity<Purchase> addUserPurchase(Purchase purchase){
+    public ResponseEntity<Purchase> addUserPurchase(@RequestBody Purchase purchase){
         purchaseService.save(purchase);
 
         return new ResponseEntity<Purchase>(purchase,HttpStatus.CREATED);
@@ -221,7 +227,7 @@ public class UserController {
 
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @PutMapping({"/admin/users/{userId}/purchases/{purchaseId}","users/{userId}/purchases/{purchaseId}"})
-    public ResponseEntity<Purchase> updateUserPurchase(@PathVariable Long userId,@PathVariable Long purchaseId, Purchase purchase){
+    public ResponseEntity<Purchase> updateUserPurchase(@PathVariable Long userId,@PathVariable Long purchaseId,@RequestBody Purchase purchase){
         ResponseEntity<Purchase> response = null;
         Purchase purchase1 = null;
         User user1 = userService.findById(userId);

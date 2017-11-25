@@ -2,12 +2,15 @@ package com.kenkosushi.Undav.controller;
 
 import com.kenkosushi.Undav.domain.model.PurchasingSystem;
 import com.kenkosushi.Undav.service.PurchasingSystemService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PurchasingSystemController {
+    private static final Log log = LogFactory.getLog(PurchasingSystemController.class);
 
     private PurchasingSystemService purchasingSystemService;
 
@@ -25,7 +29,7 @@ public class PurchasingSystemController {
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/purchasingSystem/{id}")
-    public ResponseEntity<PurchasingSystem> updateProduct(@PathVariable Long id, PurchasingSystem purchasingSystem){
+    public ResponseEntity<PurchasingSystem> updateProduct(@PathVariable Long id,@RequestBody PurchasingSystem purchasingSystem){
         ResponseEntity<PurchasingSystem> response;
         PurchasingSystem purchasingSystem1 = purchasingSystemService.findById(id);
 

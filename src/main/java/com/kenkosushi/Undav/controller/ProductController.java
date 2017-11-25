@@ -2,6 +2,8 @@ package com.kenkosushi.Undav.controller;
 
 import com.kenkosushi.Undav.domain.model.Product;
 import com.kenkosushi.Undav.service.ProductService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.Collection;
 
 @RestController
 public class ProductController {
+    private static final Log log = LogFactory.getLog(ProductController.class);
 
     private ProductService productService;
 
@@ -26,14 +29,14 @@ public class ProductController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/products/")
-    public ResponseEntity<Product> addProduct(Product product){
+    public ResponseEntity<Product> addProduct(@RequestBody Product product){
         productService.save(product);
         return new ResponseEntity<Product>(product,HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, Product product){
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id,@RequestBody Product product){
         ResponseEntity<Product> response;
         Product product1 = productService.findById(id);
 

@@ -2,6 +2,8 @@ package com.kenkosushi.Undav.controller;
 
 import com.kenkosushi.Undav.domain.model.Configuration;
 import com.kenkosushi.Undav.service.ConfigurationService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public class ConfigurationController {
+    private static final Log log = LogFactory.getLog(ConfigurationController.class);
 
     private ConfigurationService configurationService;
 
@@ -21,7 +25,7 @@ public class ConfigurationController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/configurations/{id}")
-    public ResponseEntity<Configuration> updateConfiguration(@PathVariable Long id,Configuration configuration){
+    public ResponseEntity<Configuration> updateConfiguration(@PathVariable Long id,@RequestBody Configuration configuration){
         ResponseEntity<Configuration> response;
         Configuration configuration1=configurationService.findById(id);
 
