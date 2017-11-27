@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.logging.Logger;
 
@@ -40,6 +42,14 @@ public class UserController {
         this.phoneService = phoneService;
         this.purchaseService = purchaseService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    // Who Am I
+
+    @GetMapping("/whoAmI")
+    public User whoAmI(Principal principal){
+        User user = userService.findByUsername(principal.getName());
+        return user;
     }
 
     // ABM User
