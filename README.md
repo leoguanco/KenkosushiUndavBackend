@@ -5,18 +5,18 @@ Backend de un E-commerce de Sushi hecho en Java con el framework de Spring Boot,
 
 # Instalación
 
-git clone https://github.com/LeoGuanco/KenkosushiUndavBackend.git
-cd KenkosushiUndavBackend
-mvn clean install (Para instalar las dependencias)
+* git clone https://github.com/LeoGuanco/KenkosushiUndavBackend.git
+* cd KenkosushiUndavBackend
+* mvn clean install (Para instalar las dependencias)
 
 # Creación de la base de datos
 
 Spring Boot se encargará de crear las tablas de la base de datos pero se debe crear la misma primero. En MySQL correr el siguiente comando
 
-CREATE DATABASE `kenko`;
+* CREATE DATABASE `kenko`;
 
 # Iniciar servidor
 
 Posicionarse en el directorio del proyecto y correr el siguiente comando
 
-mvn spring-boot:run
+* mvn spring-boot:run
