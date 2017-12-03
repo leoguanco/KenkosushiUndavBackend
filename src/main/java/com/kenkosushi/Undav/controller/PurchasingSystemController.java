@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 /**
  * Created by leo on 11/12/17.
@@ -27,6 +26,13 @@ public class PurchasingSystemController {
     public PurchasingSystemController(PurchasingSystemService purchasingSystemService) {
         this.purchasingSystemService = purchasingSystemService;
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/admin/purchasingSystem/")
+    public Collection<PurchasingSystem> getAllPromotion(){
+        return purchasingSystemService.findAll();
+    }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/purchasingSystem/{id}")
     public ResponseEntity<PurchasingSystem> updateProduct(@PathVariable Long id,@RequestBody PurchasingSystem purchasingSystem){
