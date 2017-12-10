@@ -59,6 +59,7 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody User user){
         log.info(user.toString());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(true);
         userService.save(user);
 
         return new ResponseEntity<User>(user,HttpStatus.CREATED);
