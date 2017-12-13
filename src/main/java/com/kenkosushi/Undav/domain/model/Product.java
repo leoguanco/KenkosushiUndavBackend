@@ -1,5 +1,7 @@
 package com.kenkosushi.Undav.domain.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,6 +25,7 @@ public class Product {
 
     private String image;
 
+    @Type(type="text")
     private String description;
 
     private Float price;
