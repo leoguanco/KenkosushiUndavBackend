@@ -2,6 +2,7 @@ package com.kenkosushi.Undav.service;
 
 
 import com.kenkosushi.Undav.domain.model.Address;
+import com.kenkosushi.Undav.domain.model.User;
 import com.kenkosushi.Undav.domain.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class AddressService {
         addressRepository.delete(id);
     }
 
-    public Collection<Address> findByUserId(Long userId){
+    public Collection<Address> findByUserId(User userId){
         return addressRepository.findByUserId(userId);
     }
 }

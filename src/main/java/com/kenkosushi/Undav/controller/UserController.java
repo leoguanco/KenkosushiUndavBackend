@@ -165,10 +165,28 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/admin/users/{id}/addresses/")
+    public Boolean deleteUserAllAddress(@PathVariable Long id){
+        User user = userService.findById(id);
+        Collection<Address> addresses = addressService.findByUserId(user);
+
+        if(addresses != null){
+            for (Address address: addresses) {
+                addressService.delete(address.getId());
+            }
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @GetMapping({"/admin/users/{id}/addresses/", "/users/{id}/addresses/"})
     public Collection<Address> getAllUserAddress(@PathVariable Long id){
-        return addressService.findByUserId(id);
+        User user = userService.findById(id);
+        return addressService.findByUserId(user);
     }
 
     // Phone
@@ -221,10 +239,28 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/admin/users/{id}/phones/")
+    public Boolean deleteUserAllPhone(@PathVariable Long id){
+        User user = userService.findById(id);
+        Collection<Phone> phones = phoneService.findByUserId(user);
+
+        if(phones != null){
+            for (Phone phone : phones) {
+                phoneService.delete(phone.getId());
+            }
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     @PreAuthorize("hasRole({'ROLE_ADMIN','ROLE_USER'})")
     @GetMapping({"/admin/users/{id}/phones/", "/users/{id}/phones/"})
     public Collection<Phone> getAllUserPhone(@PathVariable Long id){
-        return phoneService.findByUserId(id);
+        User user = userService.findById(id);
+        return phoneService.findByUserId(user);
     }
 
     // Purchase

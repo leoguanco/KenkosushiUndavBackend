@@ -1,6 +1,7 @@
 package com.kenkosushi.Undav.service;
 
 import com.kenkosushi.Undav.domain.model.Phone;
+import com.kenkosushi.Undav.domain.model.User;
 import com.kenkosushi.Undav.domain.repository.PhoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class PhoneService {
         phoneRepository.delete(id);
     }
 
-    public Collection<Phone> findByUserId(Long userId){
-        return phoneRepository.findByUserId(userId);
+    public Collection<Phone> findByUserId(User userId){
+        return phoneRepository.findByUser(userId);
     }
 }
